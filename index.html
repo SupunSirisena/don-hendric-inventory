@@ -9,7 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--bg:#080c10;--surface:#0d1117;--border:#1c2030;--text:#dde2ea;--muted:#64748b;--green:#34d399;--green-bg:#064e3b;--green-dim:#0d2818;--amber:#fbbf24;--amber-bg:#451a03;--red:#f87171;--red-bg:#7f1d1d;--blue:#3b82f6;--blue-bg:#1e3a8a;--radius:8px}
+:root{
+  --bg:#080c10;
+  --surface:#0d1117;
+  --border:#1c2030;
+  --text:#dde2ea;
+  --muted:#64748b;
+  --green:#34d399;
+  --green-bg:#064e3b;
+  --green-dim:#0d2818;
+  --amber:#fbbf24;
+  --amber-bg:#451a03;
+  --red:#f87171;
+  --red-bg:#7f1d1d;
+  --blue:#3b82f6;
+  --blue-bg:#1e3a8a;
+  --radius:8px
+}
 body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 #header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px;position:sticky;top:0;z-index:50}
@@ -23,11 +39,10 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .nav-btn .nav-label{font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0.5px}
 .nav-btn.active .nav-label{color:var(--green);font-weight:700}
 .nav-dot{width:20px;height:2px;border-radius:1px;background:var(--green);margin-top:-1px}
-.page{display:none;padding:14px 90px}
+.page{display:none;padding:14px 14px 90px}
 .page.active{display:block}
 #page-inventory{padding:0 0 90px}
-.page-content{max-width:1200px;margin:0 auto}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:14px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
 .stat-card{background:var(--surface);border-radius:var(--radius);padding:12px 10px;text-align:center}
 .stat-num{font-size:24px;font-weight:900;line-height:1.1}
 .stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
@@ -51,12 +66,12 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .card-rate{color:var(--amber);font-weight:800;font-size:14px}
 .card-rate span{color:var(--muted);font-size:10px;font-weight:400}
 .card-qty{color:var(--muted);font-size:11px;margin-left:8px}
-.btn-row{display:flex;gap:6px}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap}
 .btn-sm{border:1px solid var(--border);color:#94a3b8;background:var(--border);border-radius:7px;padding:4px 10px;font-size:11px}
 .btn-green{background:var(--green);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
 .btn-amber{background:var(--amber);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
-.rental-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}
-.rental-card-left{flex:1}
+.rental-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px}
+.rental-card-left{flex:1;min-width:200px}
 .r-name{font-weight:700;font-size:13px}
 .r-customer{font-size:11px;color:#94a3b8;margin-top:2px}
 .r-dates{font-size:10px;color:var(--muted);margin-top:2px}
@@ -65,7 +80,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .r-days{font-size:9px;color:#4b5563}
 .btn-return{margin-top:8px;width:100%;background:var(--green);color:#000;border:none;border-radius:7px;padding:7px;font-weight:800;font-size:12px}
 #inv-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:61px;z-index:40}
-.search-row{display:flex;gap:8px;margin-bottom:8px}
+.search-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .search-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;min-width:200px}
 .search-input:focus{border-color:var(--green)}
 .btn-add{background:var(--green);color:#000;border:none;border-radius:8px;padding:8px 14px;font-weight:800;font-size:14px}
@@ -77,20 +92,13 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .inv-list{padding:8px 14px}
 .inv-count{font-size:11px;color:var(--muted);margin-bottom:8px}
 #rent-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px}
-.rent-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rent-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal-sheet{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:600px;margin:0 auto;padding:18px 16px 40px;max-height:90vh;overflow-y:auto}
-@media(min-width:769px){
-  .modal-sheet{border-radius:18px;max-height:80vh}
-  .page{padding:20px}
-  #inv-toolbar{top:80px}
-  body{margin:0 auto}
-  #header{padding:20px}
-}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .modal-title{font-weight:800;font-size:16px}
-.modal-close{background:var(--border);border:none;color:#94a3b8;width:28px;height:28px;border-radius:7px;font-size:14px}
+.modal-close{background:var(--border);border:none;color:#94a3b8;width:28px;height:28px;border-radius:7px;font-size:14px;cursor:pointer}
 .field{margin-bottom:12px}
 .field-label{font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:700;letter-spacing:1px;display:block}
 .field-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;outline:none}
@@ -99,8 +107,8 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .total-box{background:var(--green-dim);border:1px solid #166534;border-radius:10px;padding:12px 14px;margin-bottom:12px}
 .total-calc{color:var(--muted);font-size:12px}
 .total-amount{color:var(--green);font-weight:900;font-size:20px;margin-top:2px}
-.btn-primary{width:100%;background:var(--green);color:#000;border:none;border-radius:10px;padding:13px;font-weight:800;font-size:14px;margin-bottom:8px}
-.btn-danger{width:100%;background:transparent;color:var(--red);border:1px solid rgba(248,113,113,0.35);border-radius:10px;padding:11px;font-weight:700;font-size:13px}
+.btn-primary{width:100%;background:var(--green);color:#000;border:none;border-radius:10px;padding:13px;font-weight:800;font-size:14px;margin-bottom:8px;cursor:pointer}
+.btn-danger{width:100%;background:transparent;color:var(--red);border:1px solid rgba(248,113,113,0.35);border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer}
 .summary-box{background:var(--bg);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px}
 .summary-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
 .summary-row .lbl{color:var(--muted)}
@@ -111,7 +119,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .empty-txt{font-size:13px}
 .overdue-section{background:#0e0505;border:1px solid var(--red);border-radius:12px;padding:12px 14px;margin-bottom:14px}
 .overdue-title{color:var(--red);font-weight:700;font-size:13px;margin-bottom:8px}
-.overdue-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.overdue-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap}
 .overdue-info .name{font-size:13px;font-weight:600}
 .overdue-info .sub{font-size:11px;color:#94a3b8}
 @media(max-width:768px){
@@ -120,11 +128,14 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
   .stat-grid{grid-template-columns:1fr 1fr 1fr}
 }
 @media(min-width:769px){
-  #bottom-nav{position:static;border-top:none;padding:0;flex-direction:row;justify-content:flex-end;gap:20px}
-  .nav-btn{flex:none;padding:0;background:none}
+  #bottom-nav{position:static;border-top:none;padding:20px 16px;justify-content:flex-end;gap:20px}
+  .nav-btn{flex:none;padding:0;background:none;flex-direction:row;gap:8px}
   .nav-dot{display:none}
+  .nav-label{font-size:12px}
   .page{padding:20px}
   .stat-grid{grid-template-columns:repeat(3,1fr)}
+  .search-row{flex-wrap:nowrap}
+  .rental-card{flex-wrap:nowrap}
 }
 </style>
 </head>
@@ -136,24 +147,22 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
   <div class="overdue-banner" id="overdue-banner" style="display:none"></div>
 </div>
 <div id="page-dashboard" class="page active">
-  <div class="page-content">
-    <div class="stat-grid">
-      <div class="stat-card" style="border:1px solid rgba(52,211,153,0.3)"><div class="stat-num" style="color:var(--green)" id="stat-available">0</div><div class="stat-lbl">Available</div></div>
-      <div class="stat-card" style="border:1px solid rgba(251,191,36,0.3)"><div class="stat-num" style="color:var(--amber)" id="stat-rented">0</div><div class="stat-lbl">Rented</div></div>
-      <div class="stat-card" style="border:1px solid rgba(248,113,113,0.3)"><div class="stat-num" style="color:var(--red)" id="stat-maint">0</div><div class="stat-lbl">Maintenance</div></div>
-    </div>
-    <div class="revenue-card">
-      <div class="revenue-tag">THIS MONTH REVENUE</div>
-      <div class="revenue-num" id="dash-revenue">0 <span style="font-size:14px;font-weight:400">LKR</span></div>
-      <div class="revenue-sub" id="dash-active-count">0 active rentals</div>
-    </div>
-    <div id="dash-overdue-section"></div>
-    <div class="sec-header">
-      <div class="sec-title">Active Rentals</div>
-      <button class="btn-amber" style="padding:6px 14px;font-size:12px;font-weight:800;border:none;border-radius:8px" onclick="openNewRental()">+ New</button>
-    </div>
-    <div id="dash-active-list"></div>
+  <div class="stat-grid">
+    <div class="stat-card" style="border:1px solid rgba(52,211,153,0.3)"><div class="stat-num" style="color:var(--green)" id="stat-available">0</div><div class="stat-lbl">Available</div></div>
+    <div class="stat-card" style="border:1px solid rgba(251,191,36,0.3)"><div class="stat-num" style="color:var(--amber)" id="stat-rented">0</div><div class="stat-lbl">Rented</div></div>
+    <div class="stat-card" style="border:1px solid rgba(248,113,113,0.3)"><div class="stat-num" style="color:var(--red)" id="stat-maint">0</div><div class="stat-lbl">Maintenance</div></div>
   </div>
+  <div class="revenue-card">
+    <div class="revenue-tag">THIS MONTH REVENUE</div>
+    <div class="revenue-num" id="dash-revenue">0 <span style="font-size:14px;font-weight:400">LKR</span></div>
+    <div class="revenue-sub" id="dash-active-count">0 active rentals</div>
+  </div>
+  <div id="dash-overdue-section"></div>
+  <div class="sec-header">
+    <div class="sec-title">Active Rentals</div>
+    <button class="btn-amber" style="padding:6px 14px;font-size:12px;font-weight:800;border:none;border-radius:8px" onclick="openNewRental()">+ New</button>
+  </div>
+  <div id="dash-active-list"></div>
 </div>
 <div id="page-inventory">
   <div id="inv-toolbar">
@@ -196,7 +205,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
     <div class="modal-header"><div class="modal-title" id="modal-item-title">Add Item</div><button class="modal-close" onclick="closeModal('modal-item')">✕</button></div>
     <div class="field"><label class="field-label">NAME</label><input class="field-input" id="fi-name"/></div>
     <div class="grid-2">
-      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses & Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
+      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses &amp; Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
       <div class="field"><label class="field-label">SIZE / TYPE</label><input class="field-input" id="fi-size" placeholder="e.g. small, 10'"/></div>
     </div>
     <div class="grid-2">
