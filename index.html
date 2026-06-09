@@ -9,24 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--bg:#080c10;--surface:#0d1117;--border:#1c2030;--text:#dde2ea;--muted:#64748b;--green:#34d399;--green-bg:#064e3b;--green-dim:#0d2818;--amber:#fbbf24;--amber-bg:#451a03;--red:#f87171;--red-bg:#450a0a;--blue:#60a5fa;--blue-bg:#1e3a5f;--radius:10px}
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh;overflow-x:hidden}
+:root{--bg:#080c10;--surface:#0d1117;--border:#1c2030;--text:#dde2ea;--muted:#64748b;--green:#34d399;--green-bg:#064e3b;--green-dim:#0d2818;--amber:#fbbf24;--amber-bg:#451a03;--red:#f87171;--red-bg:#7f1d1d;--blue:#3b82f6;--blue-bg:#1e3a8a;--radius:8px}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
-#header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 16px 12px;position:sticky;top:0;z-index:50}
+#header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px;position:sticky;top:0;z-index:50}
 .brand-tag{font-size:10px;color:var(--green);font-weight:700;letter-spacing:2px;margin-bottom:2px}
 .brand-title{font-size:19px;font-weight:800;letter-spacing:-0.5px}
 .brand-sub{font-size:11px;color:var(--muted);margin-top:1px}
 .overdue-banner{margin-top:8px;background:var(--red-bg);border:1px solid var(--red);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--red);font-weight:700}
-#bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:50}
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;width:100%;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:50}
 .nav-btn{flex:1;background:none;border:none;padding:11px 0 9px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .nav-btn .nav-icon{font-size:18px}
 .nav-btn .nav-label{font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0.5px}
 .nav-btn.active .nav-label{color:var(--green);font-weight:700}
 .nav-dot{width:20px;height:2px;border-radius:1px;background:var(--green);margin-top:-1px}
-.page{display:none;padding:14px 14px 90px}
+.page{display:none;padding:14px 90px}
 .page.active{display:block}
 #page-inventory{padding:0 0 90px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.page-content{max-width:1200px;margin:0 auto}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:14px}
 .stat-card{background:var(--surface);border-radius:var(--radius);padding:12px 10px;text-align:center}
 .stat-num{font-size:24px;font-weight:900;line-height:1.1}
 .stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
@@ -34,7 +35,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .revenue-tag{font-size:10px;color:var(--green);font-weight:700;letter-spacing:1.5px}
 .revenue-num{font-size:28px;font-weight:900;color:var(--green);letter-spacing:-1px;margin-top:2px}
 .revenue-sub{font-size:11px;color:#166534;margin-top:2px}
-.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap}
 .sec-title{font-weight:700;font-size:14px}
 .item-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start}
@@ -46,7 +47,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .badge-available{background:var(--green-bg);color:var(--green)}
 .badge-rented{background:var(--amber-bg);color:var(--amber)}
 .badge-maintenance{background:var(--red-bg);color:var(--red)}
-.card-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:9px;flex-wrap:wrap;gap:8px}
 .card-rate{color:var(--amber);font-weight:800;font-size:14px}
 .card-rate span{color:var(--muted);font-size:10px;font-weight:400}
 .card-qty{color:var(--muted);font-size:11px;margin-left:8px}
@@ -54,7 +55,8 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .btn-sm{border:1px solid var(--border);color:#94a3b8;background:var(--border);border-radius:7px;padding:4px 10px;font-size:11px}
 .btn-green{background:var(--green);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
 .btn-amber{background:var(--amber);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
-.rental-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px}
+.rental-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}
+.rental-card-left{flex:1}
 .r-name{font-weight:700;font-size:13px}
 .r-customer{font-size:11px;color:#94a3b8;margin-top:2px}
 .r-dates{font-size:10px;color:var(--muted);margin-top:2px}
@@ -64,10 +66,10 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .btn-return{margin-top:8px;width:100%;background:var(--green);color:#000;border:none;border-radius:7px;padding:7px;font-weight:800;font-size:12px}
 #inv-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:61px;z-index:40}
 .search-row{display:flex;gap:8px;margin-bottom:8px}
-.search-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.search-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;min-width:200px}
 .search-input:focus{border-color:var(--green)}
 .btn-add{background:var(--green);color:#000;border:none;border-radius:8px;padding:8px 14px;font-weight:800;font-size:14px}
-.chip-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.chip-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none;flex-wrap:wrap}
 .chip-row::-webkit-scrollbar{display:none}
 .chip{background:var(--bg);color:var(--muted);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap}
 .chip.active-green{background:var(--green);color:#000;border-color:var(--green)}
@@ -76,9 +78,16 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .inv-count{font-size:11px;color:var(--muted);margin-bottom:8px}
 #rent-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px}
 .rent-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal-sheet{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:480px;margin:0 auto;padding:18px 16px 40px;max-height:90vh;overflow-y:auto}
+.modal-sheet{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:600px;margin:0 auto;padding:18px 16px 40px;max-height:90vh;overflow-y:auto}
+@media(min-width:769px){
+  .modal-sheet{border-radius:18px;max-height:80vh}
+  .page{padding:20px}
+  #inv-toolbar{top:80px}
+  body{margin:0 auto}
+  #header{padding:20px}
+}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .modal-title{font-weight:800;font-size:16px}
 .modal-close{background:var(--border);border:none;color:#94a3b8;width:28px;height:28px;border-radius:7px;font-size:14px}
@@ -105,6 +114,18 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
 .overdue-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .overdue-info .name{font-size:13px;font-weight:600}
 .overdue-info .sub{font-size:11px;color:#94a3b8}
+@media(max-width:768px){
+  .page{padding:14px 14px 90px}
+  #header{padding:16px 16px 12px}
+  .stat-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(min-width:769px){
+  #bottom-nav{position:static;border-top:none;padding:0;flex-direction:row;justify-content:flex-end;gap:20px}
+  .nav-btn{flex:none;padding:0;background:none}
+  .nav-dot{display:none}
+  .page{padding:20px}
+  .stat-grid{grid-template-columns:repeat(3,1fr)}
+}
 </style>
 </head>
 <body>
@@ -115,22 +136,24 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
   <div class="overdue-banner" id="overdue-banner" style="display:none"></div>
 </div>
 <div id="page-dashboard" class="page active">
-  <div class="stat-grid">
-    <div class="stat-card" style="border:1px solid rgba(52,211,153,0.3)"><div class="stat-num" style="color:var(--green)" id="stat-available">0</div><div class="stat-lbl">Available</div></div>
-    <div class="stat-card" style="border:1px solid rgba(251,191,36,0.3)"><div class="stat-num" style="color:var(--amber)" id="stat-rented">0</div><div class="stat-lbl">Rented</div></div>
-    <div class="stat-card" style="border:1px solid rgba(248,113,113,0.3)"><div class="stat-num" style="color:var(--red)" id="stat-maint">0</div><div class="stat-lbl">Maintenance</div></div>
+  <div class="page-content">
+    <div class="stat-grid">
+      <div class="stat-card" style="border:1px solid rgba(52,211,153,0.3)"><div class="stat-num" style="color:var(--green)" id="stat-available">0</div><div class="stat-lbl">Available</div></div>
+      <div class="stat-card" style="border:1px solid rgba(251,191,36,0.3)"><div class="stat-num" style="color:var(--amber)" id="stat-rented">0</div><div class="stat-lbl">Rented</div></div>
+      <div class="stat-card" style="border:1px solid rgba(248,113,113,0.3)"><div class="stat-num" style="color:var(--red)" id="stat-maint">0</div><div class="stat-lbl">Maintenance</div></div>
+    </div>
+    <div class="revenue-card">
+      <div class="revenue-tag">THIS MONTH REVENUE</div>
+      <div class="revenue-num" id="dash-revenue">0 <span style="font-size:14px;font-weight:400">LKR</span></div>
+      <div class="revenue-sub" id="dash-active-count">0 active rentals</div>
+    </div>
+    <div id="dash-overdue-section"></div>
+    <div class="sec-header">
+      <div class="sec-title">Active Rentals</div>
+      <button class="btn-amber" style="padding:6px 14px;font-size:12px;font-weight:800;border:none;border-radius:8px" onclick="openNewRental()">+ New</button>
+    </div>
+    <div id="dash-active-list"></div>
   </div>
-  <div class="revenue-card">
-    <div class="revenue-tag">THIS MONTH REVENUE</div>
-    <div class="revenue-num" id="dash-revenue">0 <span style="font-size:14px;font-weight:400">LKR</span></div>
-    <div class="revenue-sub" id="dash-active-count">0 active rentals</div>
-  </div>
-  <div id="dash-overdue-section"></div>
-  <div class="sec-header">
-    <div class="sec-title">Active Rentals</div>
-    <button class="btn-amber" style="padding:6px 14px;font-size:12px;font-weight:800;border:none;border-radius:8px" onclick="openNewRental()">+ New</button>
-  </div>
-  <div id="dash-active-list"></div>
 </div>
 <div id="page-inventory">
   <div id="inv-toolbar">
@@ -173,7 +196,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
     <div class="modal-header"><div class="modal-title" id="modal-item-title">Add Item</div><button class="modal-close" onclick="closeModal('modal-item')">✕</button></div>
     <div class="field"><label class="field-label">NAME</label><input class="field-input" id="fi-name"/></div>
     <div class="grid-2">
-      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses &amp; Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
+      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses & Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
       <div class="field"><label class="field-label">SIZE / TYPE</label><input class="field-input" id="fi-size" placeholder="e.g. small, 10'"/></div>
     </div>
     <div class="grid-2">
@@ -239,24 +262,24 @@ function fmt(n){return n>0?Number(n).toLocaleString():'—';}
 function fmtMoney(n){return Number(n).toLocaleString()+' LKR';}
 function badgeClass(s){return s==='available'?'badge-available':s==='rented'?'badge-rented':'badge-maintenance';}
 function badgeLabel(s){return s==='available'?'Available':s==='rented'?'Rented':'Maintenance';}
-function showTab(btn){document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.querySelector('.nav-dot')?.remove();});btn.classList.add('active');const dot=document.createElement('div');dot.className='nav-dot';btn.appendChild(dot);const page=btn.dataset.page;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');if(page==='dashboard')renderDashboard();if(page==='inventory')renderInventory();if(page==='rentals')renderRentals();}
+function showTab(btn){document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.querySelector('.nav-dot')?.remove();});btn.classList.add('active');const dot=document.createElement('div');dot.className='nav-dot';btn.appendChild(dot);const p=btn.dataset.page;document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');}
 function buildCatChips(){const row=document.getElementById('cat-chips');row.innerHTML=CATS.map(c=>`<button class="chip${c===catFilter?' active-blue':''}" data-cat="${c}" onclick="setCatFilter(this)">${c}</button>`).join('');}
 function setCatFilter(btn){catFilter=btn.dataset.cat;document.querySelectorAll('#cat-chips .chip').forEach(b=>b.classList.remove('active-blue'));btn.classList.add('active-blue');renderInventory();}
 function setStatusFilter(btn){statusFilter=btn.dataset.status;document.querySelectorAll('#status-chips .chip').forEach(b=>b.classList.remove('active-green'));btn.classList.add('active-green');renderInventory();}
 function setRentalFilter(btn){rentalFilter=btn.dataset.rf;document.querySelectorAll('#rent-toolbar .chip').forEach(b=>b.classList.remove('active-green'));btn.classList.add('active-green');renderRentals();}
-function renderDashboard(){const av=items.filter(i=>i.status==='available').length;const re=items.filter(i=>i.status==='rented').length;const ma=items.filter(i=>i.status==='maintenance').length;document.getElementById('stat-available').textContent=av;document.getElementById('stat-rented').textContent=re;document.getElementById('stat-maint').textContent=ma;document.getElementById('item-count-sub').textContent=items.length+' items';const thisMonth=new Date().toISOString().slice(0,7);const revenue=rentals.filter(r=>r.returnDate&&r.returnDate.startsWith(thisMonth)).reduce((s,r)=>s+daysBetween(r.startDate,r.returnDate)*r.dailyRate,0);document.getElementById('dash-revenue').innerHTML=revenue.toLocaleString()+' <span style="font-size:14px;font-weight:400">LKR</span>';const active=rentals.filter(r=>r.status==='active');const overdue=active.filter(r=>isOverdue(r.dueDate));document.getElementById('dash-active-count').textContent=active.length+' active rental'+(active.length!==1?'s':'');const banner=document.getElementById('overdue-banner');if(overdue.length>0){banner.style.display='block';banner.textContent='⚠️ '+overdue.length+' overdue return'+(overdue.length>1?'s':'');}else banner.style.display='none';const od=document.getElementById('dash-overdue-section');if(overdue.length>0){od.innerHTML=`<div class="overdue-section"><div class="overdue-title">⚠️ Overdue Returns (${overdue.length})</div>${overdue.map(r=>`<div class="overdue-item"><div class="overdue-info"><div class="name">${r.itemName}</div><div class="sub">${r.customerName} · Due ${r.dueDate}</div></div><button class="btn-sm" style="background:var(--red);color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700" onclick="openReturn(${r.id})">Return</button></div>`).join('')}</div>`;}else od.innerHTML='';const al=document.getElementById('dash-active-list');if(active.length===0){al.innerHTML=emptyHTML('📋','No active rentals');return;}al.innerHTML=active.map(r=>rentalCardHTML(r)).join('');}
-function renderInventory(){buildCatChips();const q=(document.getElementById('search-input').value||'').toLowerCase();const filtered=items.filter(i=>{const mQ=!q||i.name.toLowerCase().includes(q)||String(i.id).includes(q)||(i.size||'').toLowerCase().includes(q)||(i.color||'').toLowerCase().includes(q);const mC=catFilter==='All'||i.category===catFilter;const mS=statusFilter==='All'||i.status===statusFilter;return mQ&&mC&&mS;});document.getElementById('inv-count').textContent=filtered.length+' item'+(filtered.length!==1?'s':'');const list=document.getElementById('inv-list');if(filtered.length===0){list.innerHTML=items.length===0?emptyHTML('📦','No items yet. Tap + to add your first item!'):emptyHTML('🗃️','No items match');return;}list.innerHTML=filtered.map(item=>`<div class="item-card"><div class="card-top"><div style="flex:1"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span class="card-id">#${item.id}</span><span class="card-name">${item.name}</span></div><div class="card-meta">${item.category}${item.size?' · '+item.size:''}${item.color?' · '+item.color:''}</div>${item.spec?`<div class="card-spec">${item.spec}</div>`:''}</div><span class="status-badge ${badgeClass(item.status)}">${badgeLabel(item.status)}</span></div><div class="card-bottom"><div><span class="card-rate">${fmt(item.rate)}<span> LKR/day</span></span><span class="card-qty">Qty: ${item.qty}</span></div><div class="btn-row"><button class="btn-sm" onclick="openEditItem(${item.id})">Edit</button>${item.status==='available'?`<button class="btn-green" onclick="openNewRental(${item.id})">Rent</button>`:''}</div></div></div>`).join('');}
-function renderRentals(){const list=rentals.filter(r=>rentalFilter==='all'||r.status===rentalFilter);const el=document.getElementById('rent-list');if(list.length===0){el.innerHTML=emptyHTML('📋','No rentals found');return;}el.innerHTML=list.map(r=>rentalCardHTML(r)).join('');}
-function rentalCardHTML(r){const od=r.status==='active'&&isOverdue(r.dueDate);const days=r.returnDate?daysBetween(r.startDate,r.returnDate):daysBetween(r.startDate,today());const amt=days*r.dailyRate;const bs=od?'background:var(--red-bg);color:var(--red)':r.status==='returned'?'background:var(--green-bg);color:var(--green)':'background:var(--amber-bg);color:var(--amber)';return `<div class="rental-card${od?' overdue':''}"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="r-name">${r.itemName}</div><div class="r-customer">👤 ${r.customerName} · 📱 ${r.customerPhone}</div><div class="r-dates">Out: ${r.startDate} · Due: ${r.dueDate}${r.returnDate?' · Back: '+r.returnDate:''}</div></div><div class="r-right"><span class="status-badge" style="${bs}">${od?'OVERDUE':r.status.toUpperCase()}</span><div class="r-amount" style="margin-top:4px">${amt.toLocaleString()}</div><div class="r-days">${days}d × ${r.dailyRate}</div></div></div>${r.status==='active'?`<button class="btn-return" onclick="openReturn(${r.id})">✓ Process Return</button>`:''}</div>`;}
-function openEditItem(id){editingItemId=id;const item=id?items.find(i=>i.id===id):{name:'',category:'Power Tools',size:'',qty:1,rate:0,color:'',spec:'',status:'available'};document.getElementById('modal-item-title').textContent=id?'Edit Item':'Add Item';document.getElementById('fi-name').value=item.name||'';document.getElementById('fi-cat').value=item.category||'Power Tools';document.getElementById('fi-size').value=item.size||'';document.getElementById('fi-qty').value=item.qty||1;document.getElementById('fi-rate').value=item.rate||0;document.getElementById('fi-color').value=item.color||'';document.getElementById('fi-spec').value=item.spec||'';document.getElementById('fi-status').value=item.status||'available';document.getElementById('fi-save-btn').textContent=id?'Save Changes':'Add Item';document.getElementById('fi-delete-btn').style.display=id?'block':'none';openModal('modal-item');}
-function saveItem(){const name=document.getElementById('fi-name').value.trim();if(!name){alert('Item name is required');return;}const data={name,category:document.getElementById('fi-cat').value,size:document.getElementById('fi-size').value.trim(),qty:parseInt(document.getElementById('fi-qty').value)||1,rate:parseFloat(document.getElementById('fi-rate').value)||0,color:document.getElementById('fi-color').value.trim(),spec:document.getElementById('fi-spec').value.trim(),status:document.getElementById('fi-status').value};if(editingItemId){items=items.map(i=>i.id===editingItemId?{...i,...data}:i);}else{const maxId=items.reduce((m,i)=>Math.max(m,i.id),0);items.push({id:maxId+1,...data});}save();closeModal('modal-item');renderInventory();renderDashboard();}
+function renderDashboard(){const av=items.filter(i=>i.status==='available').length;const re=items.filter(i=>i.status==='rented').length;const ma=items.filter(i=>i.status==='maintenance').length;document.getElementById('stat-available').textContent=av;document.getElementById('stat-rented').textContent=re;document.getElementById('stat-maint').textContent=ma;const ar=rentals.filter(r=>r.status==='active');const rev=ar.reduce((s,r)=>{const d=daysBetween(r.startDate,today());return s+(d*r.dailyRate);},0);document.getElementById('dash-revenue').textContent=fmtMoney(rev);document.getElementById('dash-active-count').textContent=ar.length+' active rental'+(ar.length===1?'':'s');const od=ar.filter(r=>isOverdue(r.dueDate));let odsec='';if(od.length>0){odsec=`<div class="overdue-section"><div class="overdue-title">⚠️ ${od.length} Overdue Rental${od.length===1?'':'s'}</div>${od.map(r=>`<div class="overdue-item"><div class="overdue-info"><div class="name">${r.itemName}</div><div class="sub">${r.customerName}</div></div><button class="btn-green" style="padding:4px 12px;font-size:11px" onclick="openReturn(${r.id})">Return</button></div>`).join('')}</div>`;}document.getElementById('dash-overdue-section').innerHTML=odsec;const banner=document.getElementById('overdue-banner');if(od.length>0){banner.textContent=`⚠️ ${od.length} overdue rental${od.length===1?'':'s'}`;banner.style.display='block';}else{banner.style.display='none';}document.getElementById('dash-active-list').innerHTML=ar.length===0?emptyHTML('📦','No active rentals'):ar.map(rentalCardHTML).join('');}
+function renderInventory(){buildCatChips();const q=(document.getElementById('search-input').value||'').toLowerCase();const filtered=items.filter(i=>{const mQ=!q||i.name.toLowerCase().includes(q)||String(i.id).includes(q)||i.size.toLowerCase().includes(q);const sts=statusFilter==='All'||i.status===statusFilter;const cat=catFilter==='All'||i.category===catFilter;return mQ&&sts&&cat;});const el=document.getElementById('inv-list');el.innerHTML=filtered.length===0?emptyHTML('📦','No items found'):filtered.map(i=>{const il=rentals.filter(r=>r.itemId===i.id&&r.status==='active').reduce((s,r)=>s+1,0);const al=i.qty-il;return `<div class="item-card"><div class="card-top"><div><div class="card-id">#${i.id}</div><div class="card-name">${i.name}</div><div class="card-meta">${i.category} • ${i.size}</div><div class="card-spec">${i.color}${i.spec?` • ${i.spec}`:''}</div></div><span class="status-badge ${badgeClass(i.status)}">${badgeLabel(i.status)}</span></div><div class="card-bottom"><div><span class="card-rate">${fmtMoney(i.rate)}<span>/day</span></span><span class="card-qty">${al}/${i.qty}</span></div><div class="btn-row"><button class="btn-sm" onclick="openEditItem(${i.id})">Edit</button><button class="btn-green" onclick="openNewRental(${i.id})">Rent</button></div></div></div>`}).join('');document.getElementById('inv-count').textContent=`${filtered.length} item${filtered.length===1?'':'s'}`;}
+function renderRentals(){const list=rentals.filter(r=>rentalFilter==='all'||r.status===rentalFilter);const el=document.getElementById('rent-list');if(list.length===0){el.innerHTML=emptyHTML('📋','No rentals found');return;}el.innerHTML=list.map(rentalCardHTML).join('');}
+function rentalCardHTML(r){const od=r.status==='active'&&isOverdue(r.dueDate);const days=r.returnDate?daysBetween(r.startDate,r.returnDate):daysBetween(r.startDate,today());const amt=days*r.dailyRate;return `<div class="rental-card" style="${od?'border-color:var(--red)':''}"><div class="rental-card-left"><div class="r-name">${r.itemName}</div><div class="r-customer">${r.customerName}</div><div class="r-dates">${r.startDate} → ${r.dueDate}${r.returnDate?` (Ret: ${r.returnDate}):'''}</div>${od?'<div style="color:var(--red);font-size:11px;font-weight:700;margin-top:4px">OVERDUE</div>':''}</div><div class="r-right"><div class="r-amount">${fmtMoney(amt)}</div><div class="r-days">${days} day${days===1?'':'s'}</div>${r.status==='active'?`<button class="btn-return" onclick="openReturn(${r.id})">Return</button>`:''}</div></div>`;}
+function openEditItem(id){editingItemId=id;const item=id?items.find(i=>i.id===id):{name:'',category:'Power Tools',size:'',qty:1,rate:0,color:'',spec:'',status:'available'};document.getElementById('modal-item-title').textContent=id?'Edit Item':'Add Item';document.getElementById('fi-name').value=item.name;document.getElementById('fi-cat').value=item.category;document.getElementById('fi-size').value=item.size;document.getElementById('fi-qty').value=item.qty;document.getElementById('fi-rate').value=item.rate;document.getElementById('fi-color').value=item.color;document.getElementById('fi-spec').value=item.spec;document.getElementById('fi-status').value=item.status;document.getElementById('fi-save-btn').textContent=id?'Update Item':'Add Item';document.getElementById('fi-delete-btn').style.display=id?'block':'none';openModal('modal-item');}
+function saveItem(){const name=document.getElementById('fi-name').value.trim();if(!name){alert('Item name is required');return;}const data={name,category:document.getElementById('fi-cat').value,size:document.getElementById('fi-size').value,qty:parseInt(document.getElementById('fi-qty').value),rate:parseFloat(document.getElementById('fi-rate').value),color:document.getElementById('fi-color').value,spec:document.getElementById('fi-spec').value,status:document.getElementById('fi-status').value};if(editingItemId){const idx=items.findIndex(i=>i.id===editingItemId);items[idx]={...items[idx],...data};}else{data.id=items.length>0?Math.max(...items.map(i=>i.id))+1:1;items.push(data);}save();closeModal('modal-item');renderInventory();renderDashboard();}
 function deleteItem(){if(!confirm('Delete this item?'))return;items=items.filter(i=>i.id!==editingItemId);save();closeModal('modal-item');renderInventory();renderDashboard();}
-function openNewRental(preId){const avail=items.filter(i=>i.status==='available');const noItems=document.getElementById('rental-no-items');const form=document.getElementById('rental-form');if(avail.length===0){noItems.style.display='block';form.style.display='none';}else{noItems.style.display='none';form.style.display='block';const sel=document.getElementById('nr-item');sel.innerHTML=avail.map(i=>`<option value="${i.id}" data-rate="${i.rate}">#${i.id} ${i.name}${i.size?' ('+i.size+')':''} — ${fmt(i.rate)} LKR/day</option>`).join('');if(preId){const opt=sel.querySelector(`option[value="${preId}"]`);if(opt)sel.value=preId;}document.getElementById('nr-name').value='';document.getElementById('nr-phone').value='';document.getElementById('nr-start').value=today();document.getElementById('nr-due').value='';document.getElementById('nr-deposit').value='';document.getElementById('nr-total-box').style.display='none';}openModal('modal-rental');}
-function updateRentalCalc(){const start=document.getElementById('nr-start').value;const due=document.getElementById('nr-due').value;const sel=document.getElementById('nr-item');const rate=parseFloat(sel.selectedOptions[0]?.dataset.rate||0);if(start&&due&&new Date(due)>new Date(start)){const days=daysBetween(start,due);document.getElementById('nr-calc').textContent=days+' days × '+fmt(rate)+' LKR/day';document.getElementById('nr-total').textContent=(days*rate).toLocaleString()+' LKR';document.getElementById('nr-total-box').style.display='block';}else document.getElementById('nr-total-box').style.display='none';}
-function confirmRental(){const customerName=document.getElementById('nr-name').value.trim();const dueDate=document.getElementById('nr-due').value;if(!customerName||!dueDate){alert('Fill in customer name and due date');return;}const sel=document.getElementById('nr-item');const itemId=parseInt(sel.value);const item=items.find(i=>i.id===itemId);rentals.push({id:Date.now(),itemId,itemName:item.name+(item.size?' ('+item.size+')':''),customerName,customerPhone:document.getElementById('nr-phone').value.trim(),startDate:document.getElementById('nr-start').value,dueDate,dailyRate:item.rate,deposit:parseFloat(document.getElementById('nr-deposit').value)||0,status:'active',returnDate:null});items=items.map(i=>i.id===itemId?{...i,status:'rented'}:i);save();closeModal('modal-rental');renderDashboard();renderInventory();renderRentals();}
-function openReturn(rentalId){returningRentalId=rentalId;const r=rentals.find(x=>x.id===rentalId);document.getElementById('ret-item-name').textContent=r.itemName;document.getElementById('ret-customer').textContent=r.customerName+' · '+r.customerPhone;document.getElementById('ret-dates').textContent='Rented: '+r.startDate+' · Due: '+r.dueDate;const odMsg=document.getElementById('ret-overdue-msg');odMsg.textContent=isOverdue(r.dueDate)?'⚠️ This rental is overdue!':'';document.getElementById('ret-date').value=today();updateReturnCalc();openModal('modal-return');}
-function updateReturnCalc(){const r=rentals.find(x=>x.id===returningRentalId);if(!r)return;const rd=document.getElementById('ret-date').value||today();const days=daysBetween(r.startDate,rd);const total=days*r.dailyRate;document.getElementById('ret-days').textContent=days+' day'+(days!==1?'s':'');document.getElementById('ret-rate').textContent=fmtMoney(r.dailyRate);document.getElementById('ret-deposit').textContent=fmtMoney(r.deposit||0);document.getElementById('ret-total').textContent=fmtMoney(total);document.getElementById('ret-confirm-btn').textContent='✓ Confirm — Collect '+fmtMoney(total);}
-function confirmReturn(){const rd=document.getElementById('ret-date').value||today();const r=rentals.find(x=>x.id===returningRentalId);rentals=rentals.map(x=>x.id===returningRentalId?{...x,status:'returned',returnDate:rd}:x);items=items.map(i=>i.id===r.itemId?{...i,status:'available'}:i);save();closeModal('modal-return');renderDashboard();renderInventory();renderRentals();}
+function openNewRental(preId){const avail=items.filter(i=>i.status==='available');const noItems=document.getElementById('rental-no-items');const form=document.getElementById('rental-form');if(avail.length===0){noItems.style.display='block';form.style.display='none';}else{noItems.style.display='none';form.style.display='block';const sel=document.getElementById('nr-item');sel.innerHTML=avail.map(i=>`<option value="${i.id}" data-rate="${i.rate}">${i.name} - ${i.size}</option>`).join('');if(preId){sel.value=preId;}document.getElementById('nr-name').value='';document.getElementById('nr-phone').value='';document.getElementById('nr-start').value=today();document.getElementById('nr-due').value='';document.getElementById('nr-deposit').value='0';document.getElementById('nr-total-box').style.display='none';updateRentalCalc();}openModal('modal-rental');}
+function updateRentalCalc(){const start=document.getElementById('nr-start').value;const due=document.getElementById('nr-due').value;const sel=document.getElementById('nr-item');const rate=parseFloat(sel.options[sel.selectedIndex].dataset.rate);if(!start||!due){document.getElementById('nr-total-box').style.display='none';return;}const days=daysBetween(start,due);const daily=days*rate;const deposit=parseFloat(document.getElementById('nr-deposit').value)||0;const total=daily+deposit;document.getElementById('nr-calc').textContent=`${days} day${days===1?'':'s'} × ${fmtMoney(rate)}/day + ${fmtMoney(deposit)} deposit`;document.getElementById('nr-total').textContent=fmtMoney(total);document.getElementById('nr-total-box').style.display='block';}
+function confirmRental(){const customerName=document.getElementById('nr-name').value.trim();const dueDate=document.getElementById('nr-due').value;if(!customerName||!dueDate){alert('Fill in customer name and due date');return;}const sel=document.getElementById('nr-item');const itemId=parseInt(sel.value);const item=items.find(i=>i.id===itemId);const r={id:rentals.length>0?Math.max(...rentals.map(r=>r.id))+1:1,itemId,itemName:item.name,customerName,phone:document.getElementById('nr-phone').value,startDate:document.getElementById('nr-start').value,dueDate,deposit:parseFloat(document.getElementById('nr-deposit').value)||0,dailyRate:item.rate,status:'active',returnDate:null};rentals.push(r);items.find(i=>i.id===itemId).status='rented';save();closeModal('modal-rental');renderInventory();renderDashboard();renderRentals();}
+function openReturn(rentalId){returningRentalId=rentalId;const r=rentals.find(x=>x.id===rentalId);document.getElementById('ret-item-name').textContent=r.itemName;document.getElementById('ret-customer').textContent=`Customer: ${r.customerName} | ${r.phone}`;document.getElementById('ret-dates').textContent=`Rented: ${r.startDate} → Due: ${r.dueDate}`;const od=isOverdue(r.dueDate);document.getElementById('ret-overdue-msg').textContent=od?`⚠️ OVERDUE by ${daysBetween(r.dueDate,today())} day${daysBetween(r.dueDate,today())===1?'':'s'}!`:'';document.getElementById('ret-date').value=today();updateReturnCalc();openModal('modal-return');}
+function updateReturnCalc(){const r=rentals.find(x=>x.id===returningRentalId);if(!r)return;const rd=document.getElementById('ret-date').value||today();const days=daysBetween(r.startDate,rd);const total=days*r.dailyRate;document.getElementById('ret-days').textContent=days;document.getElementById('ret-rate').textContent=fmtMoney(r.dailyRate);document.getElementById('ret-deposit').textContent=fmtMoney(r.deposit);document.getElementById('ret-total').textContent=fmtMoney(total);}
+function confirmReturn(){const rd=document.getElementById('ret-date').value||today();const r=rentals.find(x=>x.id===returningRentalId);rentals=rentals.map(x=>x.id===returningRentalId?{...x,status:'returned',returnDate:rd}:x);const item=items.find(i=>i.id===r.itemId);item.status='available';save();closeModal('modal-return');renderInventory();renderDashboard();renderRentals();}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
