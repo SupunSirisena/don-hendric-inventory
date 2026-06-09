@@ -8,134 +8,809 @@
 <title>Don Hendric Inventory</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#080c10;
-  --surface:#0d1117;
-  --border:#1c2030;
-  --text:#dde2ea;
-  --muted:#64748b;
-  --green:#34d399;
-  --green-bg:#064e3b;
-  --green-dim:#0d2818;
-  --amber:#fbbf24;
-  --amber-bg:#451a03;
-  --red:#f87171;
-  --red-bg:#7f1d1d;
-  --blue:#3b82f6;
-  --blue-bg:#1e3a8a;
-  --radius:8px
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
-#header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px;position:sticky;top:0;z-index:50}
-.brand-tag{font-size:10px;color:var(--green);font-weight:700;letter-spacing:2px;margin-bottom:2px}
-.brand-title{font-size:19px;font-weight:800;letter-spacing:-0.5px}
-.brand-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.overdue-banner{margin-top:8px;background:var(--red-bg);border:1px solid var(--red);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--red);font-weight:700}
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;width:100%;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:50}
-.nav-btn{flex:1;background:none;border:none;padding:11px 0 9px;display:flex;flex-direction:column;align-items:center;gap:3px}
-.nav-btn .nav-icon{font-size:18px}
-.nav-btn .nav-label{font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0.5px}
-.nav-btn.active .nav-label{color:var(--green);font-weight:700}
-.nav-dot{width:20px;height:2px;border-radius:1px;background:var(--green);margin-top:-1px}
-.page{display:none;padding:14px 14px 90px}
-.page.active{display:block}
-#page-inventory{padding:0 0 90px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
-.stat-card{background:var(--surface);border-radius:var(--radius);padding:12px 10px;text-align:center}
-.stat-num{font-size:24px;font-weight:900;line-height:1.1}
-.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
-.revenue-card{background:linear-gradient(135deg,var(--green-dim),var(--bg));border:1px solid #166534;border-radius:12px;padding:14px 16px;margin-bottom:14px}
-.revenue-tag{font-size:10px;color:var(--green);font-weight:700;letter-spacing:1.5px}
-.revenue-num{font-size:28px;font-weight:900;color:var(--green);letter-spacing:-1px;margin-top:2px}
-.revenue-sub{font-size:11px;color:#166534;margin-top:2px}
-.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap}
-.sec-title{font-weight:700;font-size:14px}
-.item-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start}
-.card-id{font-size:11px;color:var(--blue);font-weight:700;background:var(--blue-bg);border-radius:4px;padding:1px 5px;margin-right:6px;font-family:'DM Mono',monospace}
-.card-name{font-weight:700;font-size:13px}
-.card-meta{font-size:11px;color:var(--muted);margin-top:2px}
-.card-spec{font-size:10px;color:#4b5563;margin-top:1px;font-style:italic}
-.status-badge{border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap;margin-left:6px}
-.badge-available{background:var(--green-bg);color:var(--green)}
-.badge-rented{background:var(--amber-bg);color:var(--amber)}
-.badge-maintenance{background:var(--red-bg);color:var(--red)}
-.card-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:9px;flex-wrap:wrap;gap:8px}
-.card-rate{color:var(--amber);font-weight:800;font-size:14px}
-.card-rate span{color:var(--muted);font-size:10px;font-weight:400}
-.card-qty{color:var(--muted);font-size:11px;margin-left:8px}
-.btn-row{display:flex;gap:6px;flex-wrap:wrap}
-.btn-sm{border:1px solid var(--border);color:#94a3b8;background:var(--border);border-radius:7px;padding:4px 10px;font-size:11px}
-.btn-green{background:var(--green);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
-.btn-amber{background:var(--amber);color:#000;border:none;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700}
-.rental-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px}
-.rental-card-left{flex:1;min-width:200px}
-.r-name{font-weight:700;font-size:13px}
-.r-customer{font-size:11px;color:#94a3b8;margin-top:2px}
-.r-dates{font-size:10px;color:var(--muted);margin-top:2px}
-.r-right{text-align:right}
-.r-amount{font-size:15px;font-weight:900;color:var(--green)}
-.r-days{font-size:9px;color:#4b5563}
-.btn-return{margin-top:8px;width:100%;background:var(--green);color:#000;border:none;border-radius:7px;padding:7px;font-weight:800;font-size:12px}
-#inv-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:61px;z-index:40}
-.search-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.search-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;min-width:200px}
-.search-input:focus{border-color:var(--green)}
-.btn-add{background:var(--green);color:#000;border:none;border-radius:8px;padding:8px 14px;font-weight:800;font-size:14px}
-.chip-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none;flex-wrap:wrap}
-.chip-row::-webkit-scrollbar{display:none}
-.chip{background:var(--bg);color:var(--muted);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap}
-.chip.active-green{background:var(--green);color:#000;border-color:var(--green)}
-.chip.active-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
-.inv-list{padding:8px 14px}
-.inv-count{font-size:11px;color:var(--muted);margin-bottom:8px}
-#rent-toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 10px}
-.rent-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal-sheet{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:600px;margin:0 auto;padding:18px 16px 40px;max-height:90vh;overflow-y:auto}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-title{font-weight:800;font-size:16px}
-.modal-close{background:var(--border);border:none;color:#94a3b8;width:28px;height:28px;border-radius:7px;font-size:14px;cursor:pointer}
-.field{margin-bottom:12px}
-.field-label{font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:700;letter-spacing:1px;display:block}
-.field-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;outline:none}
-.field-input:focus{border-color:var(--green)}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.total-box{background:var(--green-dim);border:1px solid #166534;border-radius:10px;padding:12px 14px;margin-bottom:12px}
-.total-calc{color:var(--muted);font-size:12px}
-.total-amount{color:var(--green);font-weight:900;font-size:20px;margin-top:2px}
-.btn-primary{width:100%;background:var(--green);color:#000;border:none;border-radius:10px;padding:13px;font-weight:800;font-size:14px;margin-bottom:8px;cursor:pointer}
-.btn-danger{width:100%;background:transparent;color:var(--red);border:1px solid rgba(248,113,113,0.35);border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer}
-.summary-box{background:var(--bg);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px}
-.summary-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
-.summary-row .lbl{color:var(--muted)}
-.summary-divider{border-top:1px solid var(--border);padding-top:8px;margin-top:4px;display:flex;justify-content:space-between;align-items:center}
-.summary-total{font-weight:900;font-size:20px;color:var(--green)}
-.empty{text-align:center;padding:36px 20px;color:#4b5563}
-.empty-icon{font-size:36px;margin-bottom:8px}
-.empty-txt{font-size:13px}
-.overdue-section{background:#0e0505;border:1px solid var(--red);border-radius:12px;padding:12px 14px;margin-bottom:14px}
-.overdue-title{color:var(--red);font-weight:700;font-size:13px;margin-bottom:8px}
-.overdue-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap}
-.overdue-info .name{font-size:13px;font-weight:600}
-.overdue-info .sub{font-size:11px;color:#94a3b8}
-@media(max-width:768px){
-  .page{padding:14px 14px 90px}
-  #header{padding:16px 16px 12px}
-  .stat-grid{grid-template-columns:1fr 1fr 1fr}
+
+:root {
+  --bg: #080c10;
+  --surface: #0d1117;
+  --border: #1c2030;
+  --text: #dde2ea;
+  --muted: #64748b;
+  --green: #34d399;
+  --green-bg: #064e3b;
+  --green-dim: #0d2818;
+  --amber: #fbbf24;
+  --amber-bg: #451a03;
+  --red: #f87171;
+  --red-bg: #7f1d1d;
+  --blue: #3b82f6;
+  --blue-bg: #1e3a8a;
+  --radius: 8px;
 }
-@media(min-width:769px){
-  #bottom-nav{position:static;border-top:none;padding:20px 16px;justify-content:flex-end;gap:20px}
-  .nav-btn{flex:none;padding:0;background:none;flex-direction:row;gap:8px}
-  .nav-dot{display:none}
-  .nav-label{font-size:12px}
-  .page{padding:20px}
-  .stat-grid{grid-template-columns:repeat(3,1fr)}
-  .search-row{flex-wrap:nowrap}
-  .rental-card{flex-wrap:nowrap}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+button, input, select, textarea {
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+}
+
+#header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand-tag {
+  font-size: 10px;
+  color: var(--green);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 2px;
+}
+
+.brand-title {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.overdue-banner {
+  margin-top: 8px;
+  background: var(--red-bg);
+  border: 1px solid var(--red);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 50;
+}
+
+.nav-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 11px 0 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.nav-btn .nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.nav-btn .nav-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.nav-btn.active .nav-label {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.nav-dot {
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--green);
+  margin-top: -1px;
+}
+
+.page {
+  display: none;
+  padding: 14px 14px 90px;
+}
+
+.page.active {
+  display: block;
+}
+
+#page-inventory {
+  padding: 0 0 90px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.stat-lbl {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.revenue-card {
+  background: linear-gradient(135deg, var(--green-dim), var(--bg));
+  border: 1px solid #166534;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.revenue-tag {
+  font-size: 10px;
+  color: var(--green);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.2;
+}
+
+.revenue-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: -1px;
+  margin-top: 2px;
+  line-height: 1.1;
+}
+
+.revenue-sub {
+  font-size: 11px;
+  color: #166534;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.sec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.sec-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.item-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 13px;
+  margin-bottom: 8px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-id {
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 700;
+  background: var(--blue-bg);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-right: 6px;
+  font-family: 'DM Mono', monospace;
+  line-height: 1.3;
+}
+
+.card-name {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.card-meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.card-spec {
+  font-size: 10px;
+  color: #4b5563;
+  margin-top: 1px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.status-badge {
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-left: 6px;
+  line-height: 1.3;
+}
+
+.badge-available {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.badge-rented {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.badge-maintenance {
+  background: var(--red-bg);
+  color: var(--red);
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 9px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.card-rate {
+  color: var(--amber);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.card-rate span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.card-qty {
+  color: var(--muted);
+  font-size: 11px;
+  margin-left: 8px;
+  line-height: 1.3;
+}
+
+.btn-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  border: 1px solid var(--border);
+  color: #94a3b8;
+  background: var(--border);
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.btn-green {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.btn-amber {
+  background: var(--amber);
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.rental-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 13px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.rental-card-left {
+  flex: 1;
+  min-width: 200px;
+}
+
+.r-name {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.r-customer {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.r-dates {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.r-right {
+  text-align: right;
+}
+
+.r-amount {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--green);
+  line-height: 1.2;
+}
+
+.r-days {
+  font-size: 9px;
+  color: #4b5563;
+  line-height: 1.3;
+}
+
+.btn-return {
+  margin-top: 8px;
+  width: 100%;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 7px;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+#inv-toolbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px 10px;
+  position: sticky;
+  top: 61px;
+  z-index: 40;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  min-width: 200px;
+  line-height: 1.5;
+}
+
+.search-input:focus {
+  border-color: var(--green);
+}
+
+.btn-add {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.chip-row {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 3px;
+  scrollbar-width: none;
+  flex-wrap: wrap;
+}
+
+.chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.chip.active-green {
+  background: var(--green);
+  color: #000;
+  border-color: var(--green);
+}
+
+.chip.active-blue {
+  background: var(--blue-bg);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
+.inv-list {
+  padding: 8px 14px;
+}
+
+.inv-count {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+#rent-toolbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px 10px;
+}
+
+.rent-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 18px 18px 0 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 18px 16px 40px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.modal-close {
+  background: var(--border);
+  border: none;
+  color: #94a3b8;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+.field-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: block;
+  line-height: 1.2;
+}
+
+.field-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  line-height: 1.5;
+}
+
+.field-input:focus {
+  border-color: var(--green);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.total-box {
+  background: var(--green-dim);
+  border: 1px solid #166534;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.total-calc {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.total-amount {
+  color: var(--green);
+  font-weight: 900;
+  font-size: 20px;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.btn-primary {
+  width: 100%;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.btn-danger {
+  width: 100%;
+  background: transparent;
+  color: var(--red);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 10px;
+  padding: 11px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.summary-box {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.summary-row .lbl {
+  color: var(--muted);
+}
+
+.summary-divider {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-total {
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--green);
+  line-height: 1.2;
+}
+
+.empty {
+  text-align: center;
+  padding: 36px 20px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.empty-txt {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.overdue-section {
+  background: #0e0505;
+  border: 1px solid var(--red);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.overdue-title {
+  color: var(--red);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.overdue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.overdue-info .name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.overdue-info .sub {
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 14px 14px 90px;
+  }
+  #header {
+    padding: 16px 16px 12px;
+  }
+  .stat-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  #bottom-nav {
+    position: static;
+    border-top: none;
+    padding: 20px 16px;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .nav-btn {
+    flex: none;
+    padding: 0;
+    background: none;
+    flex-direction: row;
+    gap: 8px;
+  }
+  .nav-dot {
+    display: none;
+  }
+  .nav-label {
+    font-size: 12px;
+  }
+  .page {
+    padding: 20px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .search-row {
+    flex-wrap: nowrap;
+  }
+  .rental-card {
+    flex-wrap: nowrap;
+  }
 }
 </style>
 </head>
@@ -205,7 +880,7 @@ button,input,select,textarea{font-family:'Syne',sans-serif;cursor:pointer}
     <div class="modal-header"><div class="modal-title" id="modal-item-title">Add Item</div><button class="modal-close" onclick="closeModal('modal-item')">✕</button></div>
     <div class="field"><label class="field-label">NAME</label><input class="field-input" id="fi-name"/></div>
     <div class="grid-2">
-      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses &amp; Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
+      <div class="field"><label class="field-label">CATEGORY</label><select class="field-input" id="fi-cat"><option>Power Tools</option><option>Hand Tools</option><option>Ladders</option><option>Pumps</option><option>Compressors</option><option>Hoses & Pipes</option><option>Scaffolding</option><option>Concrete</option><option>Safety</option><option>Welding</option><option>Containers</option><option>Electrical</option><option>Heavy Equipment</option><option>Other</option></select></div>
       <div class="field"><label class="field-label">SIZE / TYPE</label><input class="field-input" id="fi-size" placeholder="e.g. small, 10'"/></div>
     </div>
     <div class="grid-2">
@@ -271,24 +946,24 @@ function fmt(n){return n>0?Number(n).toLocaleString():'—';}
 function fmtMoney(n){return Number(n).toLocaleString()+' LKR';}
 function badgeClass(s){return s==='available'?'badge-available':s==='rented'?'badge-rented':'badge-maintenance';}
 function badgeLabel(s){return s==='available'?'Available':s==='rented'?'Rented':'Maintenance';}
-function showTab(btn){document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.querySelector('.nav-dot')?.remove();});btn.classList.add('active');const dot=document.createElement('div');dot.className='nav-dot';btn.appendChild(dot);const p=btn.dataset.page;document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');}
+function showTab(btn){document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.querySelector('.nav-dot')?.remove();});btn.classList.add('active');const dot=document.createElement('div');dot.className='nav-dot';btn.appendChild(dot);document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+btn.dataset.page).classList.add('active');}
 function buildCatChips(){const row=document.getElementById('cat-chips');row.innerHTML=CATS.map(c=>`<button class="chip${c===catFilter?' active-blue':''}" data-cat="${c}" onclick="setCatFilter(this)">${c}</button>`).join('');}
 function setCatFilter(btn){catFilter=btn.dataset.cat;document.querySelectorAll('#cat-chips .chip').forEach(b=>b.classList.remove('active-blue'));btn.classList.add('active-blue');renderInventory();}
 function setStatusFilter(btn){statusFilter=btn.dataset.status;document.querySelectorAll('#status-chips .chip').forEach(b=>b.classList.remove('active-green'));btn.classList.add('active-green');renderInventory();}
 function setRentalFilter(btn){rentalFilter=btn.dataset.rf;document.querySelectorAll('#rent-toolbar .chip').forEach(b=>b.classList.remove('active-green'));btn.classList.add('active-green');renderRentals();}
-function renderDashboard(){const av=items.filter(i=>i.status==='available').length;const re=items.filter(i=>i.status==='rented').length;const ma=items.filter(i=>i.status==='maintenance').length;document.getElementById('stat-available').textContent=av;document.getElementById('stat-rented').textContent=re;document.getElementById('stat-maint').textContent=ma;const ar=rentals.filter(r=>r.status==='active');const rev=ar.reduce((s,r)=>{const d=daysBetween(r.startDate,today());return s+(d*r.dailyRate);},0);document.getElementById('dash-revenue').textContent=fmtMoney(rev);document.getElementById('dash-active-count').textContent=ar.length+' active rental'+(ar.length===1?'':'s');const od=ar.filter(r=>isOverdue(r.dueDate));let odsec='';if(od.length>0){odsec=`<div class="overdue-section"><div class="overdue-title">⚠️ ${od.length} Overdue Rental${od.length===1?'':'s'}</div>${od.map(r=>`<div class="overdue-item"><div class="overdue-info"><div class="name">${r.itemName}</div><div class="sub">${r.customerName}</div></div><button class="btn-green" style="padding:4px 12px;font-size:11px" onclick="openReturn(${r.id})">Return</button></div>`).join('')}</div>`;}document.getElementById('dash-overdue-section').innerHTML=odsec;const banner=document.getElementById('overdue-banner');if(od.length>0){banner.textContent=`⚠️ ${od.length} overdue rental${od.length===1?'':'s'}`;banner.style.display='block';}else{banner.style.display='none';}document.getElementById('dash-active-list').innerHTML=ar.length===0?emptyHTML('📦','No active rentals'):ar.map(rentalCardHTML).join('');}
-function renderInventory(){buildCatChips();const q=(document.getElementById('search-input').value||'').toLowerCase();const filtered=items.filter(i=>{const mQ=!q||i.name.toLowerCase().includes(q)||String(i.id).includes(q)||i.size.toLowerCase().includes(q);const sts=statusFilter==='All'||i.status===statusFilter;const cat=catFilter==='All'||i.category===catFilter;return mQ&&sts&&cat;});const el=document.getElementById('inv-list');el.innerHTML=filtered.length===0?emptyHTML('📦','No items found'):filtered.map(i=>{const il=rentals.filter(r=>r.itemId===i.id&&r.status==='active').reduce((s,r)=>s+1,0);const al=i.qty-il;return `<div class="item-card"><div class="card-top"><div><div class="card-id">#${i.id}</div><div class="card-name">${i.name}</div><div class="card-meta">${i.category} • ${i.size}</div><div class="card-spec">${i.color}${i.spec?` • ${i.spec}`:''}</div></div><span class="status-badge ${badgeClass(i.status)}">${badgeLabel(i.status)}</span></div><div class="card-bottom"><div><span class="card-rate">${fmtMoney(i.rate)}<span>/day</span></span><span class="card-qty">${al}/${i.qty}</span></div><div class="btn-row"><button class="btn-sm" onclick="openEditItem(${i.id})">Edit</button><button class="btn-green" onclick="openNewRental(${i.id})">Rent</button></div></div></div>`}).join('');document.getElementById('inv-count').textContent=`${filtered.length} item${filtered.length===1?'':'s'}`;}
-function renderRentals(){const list=rentals.filter(r=>rentalFilter==='all'||r.status===rentalFilter);const el=document.getElementById('rent-list');if(list.length===0){el.innerHTML=emptyHTML('📋','No rentals found');return;}el.innerHTML=list.map(rentalCardHTML).join('');}
-function rentalCardHTML(r){const od=r.status==='active'&&isOverdue(r.dueDate);const days=r.returnDate?daysBetween(r.startDate,r.returnDate):daysBetween(r.startDate,today());const amt=days*r.dailyRate;return `<div class="rental-card" style="${od?'border-color:var(--red)':''}"><div class="rental-card-left"><div class="r-name">${r.itemName}</div><div class="r-customer">${r.customerName}</div><div class="r-dates">${r.startDate} → ${r.dueDate}${r.returnDate?` (Ret: ${r.returnDate}):'''}</div>${od?'<div style="color:var(--red);font-size:11px;font-weight:700;margin-top:4px">OVERDUE</div>':''}</div><div class="r-right"><div class="r-amount">${fmtMoney(amt)}</div><div class="r-days">${days} day${days===1?'':'s'}</div>${r.status==='active'?`<button class="btn-return" onclick="openReturn(${r.id})">Return</button>`:''}</div></div>`;}
-function openEditItem(id){editingItemId=id;const item=id?items.find(i=>i.id===id):{name:'',category:'Power Tools',size:'',qty:1,rate:0,color:'',spec:'',status:'available'};document.getElementById('modal-item-title').textContent=id?'Edit Item':'Add Item';document.getElementById('fi-name').value=item.name;document.getElementById('fi-cat').value=item.category;document.getElementById('fi-size').value=item.size;document.getElementById('fi-qty').value=item.qty;document.getElementById('fi-rate').value=item.rate;document.getElementById('fi-color').value=item.color;document.getElementById('fi-spec').value=item.spec;document.getElementById('fi-status').value=item.status;document.getElementById('fi-save-btn').textContent=id?'Update Item':'Add Item';document.getElementById('fi-delete-btn').style.display=id?'block':'none';openModal('modal-item');}
-function saveItem(){const name=document.getElementById('fi-name').value.trim();if(!name){alert('Item name is required');return;}const data={name,category:document.getElementById('fi-cat').value,size:document.getElementById('fi-size').value,qty:parseInt(document.getElementById('fi-qty').value),rate:parseFloat(document.getElementById('fi-rate').value),color:document.getElementById('fi-color').value,spec:document.getElementById('fi-spec').value,status:document.getElementById('fi-status').value};if(editingItemId){const idx=items.findIndex(i=>i.id===editingItemId);items[idx]={...items[idx],...data};}else{data.id=items.length>0?Math.max(...items.map(i=>i.id))+1:1;items.push(data);}save();closeModal('modal-item');renderInventory();renderDashboard();}
+function renderDashboard(){const av=items.filter(i=>i.status==='available').length;const re=items.filter(i=>i.status==='rented').length;const ma=items.filter(i=>i.status==='maintenance').length;document.getElementById('stat-available').textContent=av;document.getElementById('stat-rented').textContent=re;document.getElementById('stat-maint').textContent=ma;document.getElementById('item-count-sub').textContent=items.length+' items';const active=rentals.filter(r=>r.status==='active');const thisMonth=active.reduce((sum,r)=>{const s=new Date(r.startDate);const m=new Date();return s.getFullYear()===m.getFullYear()&&s.getMonth()===m.getMonth()?sum+(daysBetween(r.startDate,r.dueDate)*r.dailyRate):sum},0);document.getElementById('dash-revenue').innerHTML=Number(thisMonth).toLocaleString()+' <span style="font-size:14px;font-weight:400">LKR</span>';document.getElementById('dash-active-count').textContent=active.length+' active rentals';const od=rentals.filter(r=>r.status==='active'&&isOverdue(r.dueDate));const sec=document.getElementById('dash-overdue-section');if(od.length===0){sec.innerHTML='';}else{sec.innerHTML=`<div class="overdue-section"><div class="overdue-title">⚠️ ${od.length} Overdue Item${od.length>1?'s':''}</div>${od.map(r=>`<div class="overdue-item"><div class="overdue-info"><div class="name">${r.itemName}</div><div class="sub">${r.customerName}</div></div><button class="btn-green" style="padding:4px 8px;font-size:10px" onclick="openReturn(${r.id})">Return</button></div>`).join('')}</div>`;}const list=active.length===0?'<div class="empty"><div class="empty-icon">📭</div><div class="empty-txt">No active rentals</div></div>':active.map(r=>rentalCardHTML(r)).join('');document.getElementById('dash-active-list').innerHTML=list;}
+function renderInventory(){buildCatChips();const q=(document.getElementById('search-input').value||'').toLowerCase();const filtered=items.filter(i=>{const mQ=!q||i.name.toLowerCase().includes(q)||String(i.id).includes(q)||i.size.toLowerCase().includes(q);const sQ=statusFilter==='All'||i.status===statusFilter;const cQ=catFilter==='All'||i.category===catFilter;return mQ&&sQ&&cQ;});document.getElementById('inv-count').textContent=filtered.length+' item'+(filtered.length!==1?'s':'');const list=filtered.length===0?'<div class="empty"><div class="empty-icon">🔍</div><div class="empty-txt">No items found</div></div>':filtered.map(i=>{const badge=`<span class="status-badge ${badgeClass(i.status)}">${badgeLabel(i.status)}</span>`;return `<div class="item-card"><div class="card-top"><div><div class="card-id">#${i.id}</div><div class="card-name">${i.name}</div><div class="card-meta">${i.category} ${i.size?'• '+i.size:''}</div><div class="card-spec">${i.color?'📍 '+i.color:''} ${i.spec?i.spec:''}</div></div>${badge}</div><div class="card-bottom"><div class="card-rate">₨${Number(i.rate).toLocaleString()}<span>/day</span></div><div class="card-qty">Qty: ${i.qty}</div><div class="btn-row"><button class="btn-sm" onclick="openEditItem(${i.id})">Edit</button><button class="btn-green" onclick="openNewRental(${i.id})" style="padding:4px 8px">Rent</button></div></div></div>`;}).join('');document.getElementById('inv-list').innerHTML=list;}
+function renderRentals(){const list=rentals.filter(r=>rentalFilter==='all'||r.status===rentalFilter);const el=document.getElementById('rent-list');if(list.length===0){el.innerHTML=emptyHTML('📋','No rentals');}else{el.innerHTML=list.map(r=>rentalCardHTML(r)).join('');}}
+function rentalCardHTML(r){const od=r.status==='active'&&isOverdue(r.dueDate);const days=r.returnDate?daysBetween(r.startDate,r.returnDate):daysBetween(r.startDate,today());const amt=days*r.dailyRate;const o=od?'<div style="color:var(--red);font-size:10px;margin-top:2px;font-weight:700">⚠️ OVERDUE</div>':'';return `<div class="rental-card" style="${od?'border-color:var(--red)':''};"><div class="rental-card-left"><div class="r-name">${r.itemName}</div><div class="r-customer">${r.customerName}</div><div class="r-dates">${r.startDate} → ${r.dueDate}</div>${o}</div><div class="r-right"><div class="r-amount">₨${Number(amt).toLocaleString()}</div><div class="r-days">${days} day${days>1?'s':''}</div>${r.status==='active'?`<button class="btn-return" onclick="openReturn(${r.id})">✓ Return</button>`:''}</div></div>`;}
+function openEditItem(id){editingItemId=id;const item=id?items.find(i=>i.id===id):{name:'',category:'Power Tools',size:'',qty:1,rate:0,color:'',spec:'',status:'available'};document.getElementById('modal-item-title').textContent=id?'Edit Item':'Add Item';document.getElementById('fi-name').value=item.name;document.getElementById('fi-cat').value=item.category;document.getElementById('fi-size').value=item.size;document.getElementById('fi-qty').value=item.qty;document.getElementById('fi-rate').value=item.rate;document.getElementById('fi-color').value=item.color;document.getElementById('fi-spec').value=item.spec;document.getElementById('fi-status').value=item.status;const btn=document.getElementById('fi-save-btn');btn.textContent=id?'Update Item':'Add Item';const del=document.getElementById('fi-delete-btn');del.style.display=id?'block':'none';openModal('modal-item');}
+function saveItem(){const name=document.getElementById('fi-name').value.trim();if(!name){alert('Item name is required');return;}const data={name,category:document.getElementById('fi-cat').value,size:document.getElementById('fi-size').value,qty:parseInt(document.getElementById('fi-qty').value),rate:parseFloat(document.getElementById('fi-rate').value),color:document.getElementById('fi-color').value,spec:document.getElementById('fi-spec').value,status:document.getElementById('fi-status').value};if(editingItemId){const idx=items.findIndex(i=>i.id===editingItemId);items[idx]={...items[idx],...data};}else{data.id=Math.max(0,...items.map(i=>i.id||0))+1;items.push(data);}save();closeModal('modal-item');renderInventory();renderDashboard();}
 function deleteItem(){if(!confirm('Delete this item?'))return;items=items.filter(i=>i.id!==editingItemId);save();closeModal('modal-item');renderInventory();renderDashboard();}
-function openNewRental(preId){const avail=items.filter(i=>i.status==='available');const noItems=document.getElementById('rental-no-items');const form=document.getElementById('rental-form');if(avail.length===0){noItems.style.display='block';form.style.display='none';}else{noItems.style.display='none';form.style.display='block';const sel=document.getElementById('nr-item');sel.innerHTML=avail.map(i=>`<option value="${i.id}" data-rate="${i.rate}">${i.name} - ${i.size}</option>`).join('');if(preId){sel.value=preId;}document.getElementById('nr-name').value='';document.getElementById('nr-phone').value='';document.getElementById('nr-start').value=today();document.getElementById('nr-due').value='';document.getElementById('nr-deposit').value='0';document.getElementById('nr-total-box').style.display='none';updateRentalCalc();}openModal('modal-rental');}
-function updateRentalCalc(){const start=document.getElementById('nr-start').value;const due=document.getElementById('nr-due').value;const sel=document.getElementById('nr-item');const rate=parseFloat(sel.options[sel.selectedIndex].dataset.rate);if(!start||!due){document.getElementById('nr-total-box').style.display='none';return;}const days=daysBetween(start,due);const daily=days*rate;const deposit=parseFloat(document.getElementById('nr-deposit').value)||0;const total=daily+deposit;document.getElementById('nr-calc').textContent=`${days} day${days===1?'':'s'} × ${fmtMoney(rate)}/day + ${fmtMoney(deposit)} deposit`;document.getElementById('nr-total').textContent=fmtMoney(total);document.getElementById('nr-total-box').style.display='block';}
-function confirmRental(){const customerName=document.getElementById('nr-name').value.trim();const dueDate=document.getElementById('nr-due').value;if(!customerName||!dueDate){alert('Fill in customer name and due date');return;}const sel=document.getElementById('nr-item');const itemId=parseInt(sel.value);const item=items.find(i=>i.id===itemId);const r={id:rentals.length>0?Math.max(...rentals.map(r=>r.id))+1:1,itemId,itemName:item.name,customerName,phone:document.getElementById('nr-phone').value,startDate:document.getElementById('nr-start').value,dueDate,deposit:parseFloat(document.getElementById('nr-deposit').value)||0,dailyRate:item.rate,status:'active',returnDate:null};rentals.push(r);items.find(i=>i.id===itemId).status='rented';save();closeModal('modal-rental');renderInventory();renderDashboard();renderRentals();}
-function openReturn(rentalId){returningRentalId=rentalId;const r=rentals.find(x=>x.id===rentalId);document.getElementById('ret-item-name').textContent=r.itemName;document.getElementById('ret-customer').textContent=`Customer: ${r.customerName} | ${r.phone}`;document.getElementById('ret-dates').textContent=`Rented: ${r.startDate} → Due: ${r.dueDate}`;const od=isOverdue(r.dueDate);document.getElementById('ret-overdue-msg').textContent=od?`⚠️ OVERDUE by ${daysBetween(r.dueDate,today())} day${daysBetween(r.dueDate,today())===1?'':'s'}!`:'';document.getElementById('ret-date').value=today();updateReturnCalc();openModal('modal-return');}
-function updateReturnCalc(){const r=rentals.find(x=>x.id===returningRentalId);if(!r)return;const rd=document.getElementById('ret-date').value||today();const days=daysBetween(r.startDate,rd);const total=days*r.dailyRate;document.getElementById('ret-days').textContent=days;document.getElementById('ret-rate').textContent=fmtMoney(r.dailyRate);document.getElementById('ret-deposit').textContent=fmtMoney(r.deposit);document.getElementById('ret-total').textContent=fmtMoney(total);}
-function confirmReturn(){const rd=document.getElementById('ret-date').value||today();const r=rentals.find(x=>x.id===returningRentalId);rentals=rentals.map(x=>x.id===returningRentalId?{...x,status:'returned',returnDate:rd}:x);const item=items.find(i=>i.id===r.itemId);item.status='available';save();closeModal('modal-return');renderInventory();renderDashboard();renderRentals();}
+function openNewRental(preId){const avail=items.filter(i=>i.status==='available');const noItems=document.getElementById('rental-no-items');const form=document.getElementById('rental-form');if(avail.length===0){noItems.style.display='block';form.style.display='none';}else{noItems.style.display='none';form.style.display='block';const sel=document.getElementById('nr-item');sel.innerHTML=avail.map(i=>`<option value="${i.id}">${i.name} (${i.category})</option>`).join('');if(preId){sel.value=preId;}document.getElementById('nr-name').value='';document.getElementById('nr-phone').value='';document.getElementById('nr-start').value=today();document.getElementById('nr-due').value=today();document.getElementById('nr-deposit').value='';document.getElementById('nr-total-box').style.display='none';updateRentalCalc();}openModal('modal-rental');}
+function updateRentalCalc(){const start=document.getElementById('nr-start').value;const due=document.getElementById('nr-due').value;const sel=document.getElementById('nr-item');const rate=parseFloat(items.find(i=>i.id==sel.value)?.rate||0);if(start&&due){const d=daysBetween(start,due);const t=d*rate;const box=document.getElementById('nr-total-box');box.style.display='block';document.getElementById('nr-calc').textContent=`${d} day${d>1?'s':''} × ₨${Number(rate).toLocaleString()} = `;document.getElementById('nr-total').textContent='₨'+Number(t).toLocaleString();}}
+function confirmRental(){const customerName=document.getElementById('nr-name').value.trim();const dueDate=document.getElementById('nr-due').value;if(!customerName||!dueDate){alert('Fill in customer name and due date');return;}const sel=document.getElementById('nr-item');const item=items.find(i=>i.id==sel.value);const dep=parseFloat(document.getElementById('nr-deposit').value||0);const r={id:Math.max(0,...rentals.map(r=>r.id||0))+1,itemId:item.id,itemName:item.name,customerName,phone:document.getElementById('nr-phone').value,startDate:document.getElementById('nr-start').value,dueDate,dailyRate:item.rate,deposit:dep,status:'active',returnDate:null};items=items.map(i=>i.id===item.id?{...i,status:'rented'}:i);rentals.push(r);save();closeModal('modal-rental');renderDashboard();renderInventory();renderRentals();}
+function openReturn(rentalId){returningRentalId=rentalId;const r=rentals.find(x=>x.id===rentalId);document.getElementById('ret-item-name').textContent=r.itemName;document.getElementById('ret-customer').textContent=r.customerName;document.getElementById('ret-dates').textContent=r.startDate+' → '+r.dueDate;document.getElementById('ret-overdue-msg').textContent=isOverdue(r.dueDate)?'⚠️ This rental is OVERDUE':'';document.getElementById('ret-date').value=today();updateReturnCalc();openModal('modal-return');}
+function updateReturnCalc(){const r=rentals.find(x=>x.id===returningRentalId);if(!r)return;const rd=document.getElementById('ret-date').value||today();const days=daysBetween(r.startDate,rd);const total=days*r.dailyRate;const owed=Math.max(0,total-r.deposit);document.getElementById('ret-days').textContent=days+' day'+(days>1?'s':'');document.getElementById('ret-rate').textContent='₨'+Number(r.dailyRate).toLocaleString();document.getElementById('ret-deposit').textContent='₨'+Number(r.deposit).toLocaleString();document.getElementById('ret-total').textContent='₨'+Number(owed).toLocaleString();}
+function confirmReturn(){const rd=document.getElementById('ret-date').value||today();const r=rentals.find(x=>x.id===returningRentalId);rentals=rentals.map(x=>x.id===returningRentalId?{...x,status:'returned',returnDate:rd}:x);items=items.map(i=>i.id===r.itemId?{...i,status:'available'}:i);save();closeModal('modal-return');renderDashboard();renderInventory();renderRentals();}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
